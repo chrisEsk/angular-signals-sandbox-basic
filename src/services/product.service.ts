@@ -1,6 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import * as Parse from 'parse';
+import { Observable, from, map } from 'rxjs';
 
 import { Product } from 'src/app/models/product.model';
 
@@ -11,22 +12,25 @@ export class ProductService {
 
   constructor() { }
 
-  async getAllProducts(): Promise<Product[]> {
+  getAllProducts(): Observable<Product[]> {
     const Product = Parse.Object.extend('Product');
     const query = new Parse.Query(Product);
 
-    const results = await query.find();
-    const products: Product[] = [];
-    for (const j of results) {
-      const json: Product = {
-        id: j.id,
-        name: j.get('name'),
-        price_usd: j.get('price_usd'),
-      };
+    return from(query.find()).pipe(
+      map((results) => {
+        const products: Product[] = [];
+        for (const j of results) {
+          const json: Product = {
+            id: j.id,
+            name: j.get('name'),
+            price_usd: j.get('price_usd'),
+          };
 
-      products.push(json);
-    }
+          products.push(json);
+        }
 
-    return products;
+        return products;
+      })
+    );
   }
 }
