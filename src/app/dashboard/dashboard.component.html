@@ -2,28 +2,28 @@
   <div class="row">
     <div class="col">
       <table class="table">
-          <thead>
-              <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">USD</th>
-                  <th scope="col" *ngIf="products()[0]?.price_gbp">GBP</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let item of products()">
-                  <td>{{item.id}}</td>
-                  <td>{{item.name}}</td>
-                  <td>${{item.price_usd}}</td>
-                  <td *ngIf="item.price_gbp">£{{item.price_gbp}}</td>
-              </tr>
-          </tbody>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">USD</th>
+            <th scope="col" *ngIf="products()[0]?.price_gbp">GBP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of products()">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>${{item.price_usd}}</td>
+            <td *ngIf="item.price_gbp">£{{item.price_gbp}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <div class="col">
-      <button class="btn btn-primary" (click)="aggregateGBPPrice()">Aggregate GDP Price</button>
+      <button class="btn btn-primary" (click)="aggregateGBPPrice()">Aggregate GBP Price</button>
       <br>
-      <button class="btn btn-primary mt-3" (click)="removeGBPPrice()">Remove GDP Price</button>
+      <button class="btn btn-primary mt-3" (click)="removeGBPPrice()">Remove GBP Price</button>
     </div>
   </div>
 </div>

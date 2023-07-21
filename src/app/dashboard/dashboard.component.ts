@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Signal, computed, effect, inject, signal } from '@angular/core';
 
 import { ProductService } from 'src/services/product.service';
 import { Product } from '../models/product.model';
@@ -11,8 +11,9 @@ import { Product } from '../models/product.model';
 })
 export class DashboardComponent implements OnInit {
   private productService = inject(ProductService);
-  private usd_gbp_exchangeRate = 0.75;
   public products = signal<Product[]>([]);
+
+  usd_gbp_exchangeRate: Signal<number> = computed(() => 0.75);
 
   constructor() {
     effect(() => {
@@ -29,7 +30,7 @@ export class DashboardComponent implements OnInit {
   aggregateGBPPrice() {
     this.products.mutate(products => {
       products.forEach(e => {
-        e.price_gbp = e.price_usd ? e.price_usd * this.usd_gbp_exchangeRate : 0;
+        e.price_gbp = e.price_usd ? e.price_usd * this.usd_gbp_exchangeRate() : 0;
       });
     });
   }
